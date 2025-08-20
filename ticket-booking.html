@@ -1,0 +1,98 @@
+<p>ticket-booking works!</p>
+<div class="container">
+  <h1>🎬 Movie Tickets</h1>
+
+  <!-- Available Movies -->
+  <section class="card">
+    <h2>Available Movies</h2>
+    <div class="grid">
+      <div class="movie" *ngFor="let m of movies">
+        <div class="id">#{{ m.id | number:'3.0' }}</div>
+        <div class="title">{{ m.name }}</div>
+        <div class="meta">{{ m.language }} • {{ m.rating }}</div>
+        <button (click)="selectMovie(m)">Book</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Form -->
+  <section class="card">
+    <h2>Book Your Ticket</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row">
+        <label>Movie ID</label>
+        <input type="number" formControlName="movieId" (change)="onMovieIdChange()" />
+      </div>
+      <div class="row">
+        <label>Movie Name</label>
+        <input type="text" formControlName="moviename" />
+      </div>
+      <div class="row">
+        <label>Your Name</label>
+        <input type="text" formControlName="bookedby" />
+      </div>
+      <div class="row">
+        <label>No. of Seats</label>
+        <input type="number" formControlName="noofseats" min="1" max="10" />
+      </div>
+      <div class="row">
+        <label>Show Time</label>
+        <select formControlName="showtime">
+          <option *ngFor="let s of showtimes" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button type="submit" [disabled]="form.invalid">Proceed to Payment</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Payment Section -->
+  <section class="card" *ngIf="stage === 'payment'">
+    <h2>Payment</h2>
+    <div class="payment-methods">
+      <label *ngFor="let p of paymentMethods">
+        <input type="radio" name="pm" [value]="p" (change)="selectedPayment=p" />
+        {{ p }}
+      </label>
+    </div>
+    <button (click)="confirmPayment()" [disabled]="!selectedPayment">Pay & Confirm</button>
+    <button (click)="cancelPayment()">Cancel</button>
+  </section>
+
+  <!-- Ticket Section -->
+  <section class="card" *ngIf="stage === 'ticket' && ticket">
+    <h2>Your Ticket</h2>
+    <div>
+  <p><b>Name:</b> {{ ticket?.bookedby }}</p>
+<p><b>Movie:</b> {{ ticket?.moviename }} (#{{ ticket?.movieId }})</p>
+<p><b>Show Time:</b> {{ ticket?.showtime }}</p>
+<p><b>Seats:</b> {{ ticket?.noofseats }} ({{ ticket?.seatNumbers?.join(', ') }})</p>
+<p><b>Payment:</b> {{ ticket?.paymentMethod }} ✅</p>
+
+    </div>
+    <button (click)="reset()">Book Another</button>
+  </section>
+
+  <!-- Recent Bookings -->
+  <section class="card">
+    <h2>Recent Bookings</h2>
+    <input type="text" [(ngModel)]="filterMovie" (ngModelChange)="loadBookings()" placeholder="Filter by movie name" />
+    <table>
+      <tr>
+        <th>Booked By</th>
+        <th>Movie</th>
+        <th>Show</th>
+        <th>Seats</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let b of bookings">
+        <td>{{ b.bookedby }}</td>
+        <td>{{ b.moviename }}</td>
+        <td>{{ b.showtime }}</td>
+        <td>{{ b.noofseats }}</td>
+        <td><button (click)="delete(b.bookedby)">Delete</button></td>
+      </tr>
+    </table>
+  </section>
+</div>
