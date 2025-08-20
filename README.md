@@ -66,7 +66,7 @@ A full-stack **Movie Ticket Booking System** with **Spring Boot (Backend)** and 
 
 
 
-!Database
+🛢️ Database Schema:
 
  CREATE TABLE Bookings (
     bookedby VARCHAR(100) PRIMARY KEY,   
@@ -75,3 +75,6 @@ A full-stack **Movie Ticket Booking System** with **Spring Boot (Backend)** and 
     noofseats INT NOT NULL,
     showtime VARCHAR(50) NOT NULL
 );
+
+👨‍💻 Developed By Chetan Vhankade
+Developed as a demo project for learning Spring Boot + Angular full-stack development 🚀
