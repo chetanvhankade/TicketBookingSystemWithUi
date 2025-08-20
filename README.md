@@ -50,6 +50,22 @@ A full-stack **Movie Ticket Booking System** with **Spring Boot (Backend)** and 
 
 
 
+
+
+!Backend
+
+<img width="1518" height="867" alt="backend" src="https://github.com/user-attachments/assets/c275853a-963c-4950-ba31-515cb0beffd5" />
+
+
+
+
+
+
+
+
+
+
+
 !Database
 
  CREATE TABLE Bookings (
